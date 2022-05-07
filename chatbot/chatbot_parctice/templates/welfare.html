@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+
+    {% block styles %}
+
+    <script>
+    function createQnA(id) {
+        var clickedQuestion = document.getElementById(id).innerText;
+        addtext = "<div style=' word-break: break-all;margin:15px 0; text-align: right;'><span style='box-shadow: 1px 1px 5px;color: #555;background-color:#d4b680;padding:5px 8px; border-radius:10px 0 10px 10px;'>" + clickedQuestion + "</span> </div>";
+        document.getElementById("chatbox").innerHTML += addtext;
+        bottext = "<div style='margin:14px 0; text-align: left;'><span style='box-shadow: 0px 1px 5px 0;color:#555;border-radius:0 10px 10px 10px;background-color:#FCFCFC;padding:5px 8px;'>" + clickedQuestion + "을 질문 해주셨군요 " + clickedQuestion + "관련 질문을 해주시길 바랍니다." +"</span> </div>";
+        document.getElementById("chatbox").innerHTML += bottext;
+        var mydiv = document.getElementById("chatbox");
+            window.scrollTo(0,mydiv.scrollHeight)
+    }
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+
+    var xhr;
+    function submit(){
+        if(window.event.keyCode === 13) {
+            sendAsk();
+        }
+    }
+    function sendAsk(){
+        chattext = document.getElementById("chattext").value;
+        if (chattext ==""){
+            document.getElementById("chattext").focus();
+            return false;
+        }
+        //alert(chattext);
+        addtext = "<div style=' word-break: break-all;margin:15px 0; text-align: right;'><span style='box-shadow: 1px 1px 5px;color: #555;background-color:#d4b680;padding:5px 8px; border-radius:10px 0 10px 10px;'>" + chattext + "</span> </div>";
+        document.getElementById("chatbox").innerHTML += addtext;
+        var strurl = "chatanswer_welfare?chattext=" + chattext;
+
+        //return false;
+        xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                var data = xhr.responseText;
+                var obj = JSON.parse(data);
+            btext = obj.result;
+
+            bottext = "<div style=' word-break: break-all;margin:15px 0; text-align: left;'><span style='box-shadow: 1px 1px 5px 0;color: #555;border-radius:0 10px 10px 10px;background-color:#FCFCFC;padding:5px 8px;'>" + btext + "</span> </div>";
+            document.getElementById("chatbox").innerHTML += bottext;
+
+            var mydiv = document.getElementById("chatbox");
+            window.scrollTo(0,mydiv.scrollHeight)
+            }
+        };
+
+
+            xhr.open("GET", strurl);
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            xhr.send(null);
+        document.getElementById("chattext").value = "";
+    }
+
+    </script>
+    {% endblock %}
+
+    <style>
+        .chatheader{
+            position:fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height: 5%;
+            background-color: #263147;
+            color:white;
+            text-align: center;
+            display: flex;
+        }
+        .chatfooter{
+            position:fixed;
+            left:0;
+            bottom:0;
+            width:100%;
+            padding:1% 0;
+            background-color: #FFFFFF;
+            color:#000;
+            text-align: center;
+        }
+        .QnAgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            margin: 0 0 0 10px;
+
+        }
+        .box {margin: 0% 10% 0 0; max-width: 55%;box-shadow: 0px 1px 6px 0; color: #555; border-radius:0 10px 10px 10px; background-color: #FCFCFC; padding:1%; text-align:left;}
+        .question { width: 66%; margin: 10px 0 0 0; max-width: 75%; border: 1px solid #888; color: #555; border-radius:30px; background-color: #FCFCFC; padding:8px; text-align:center;}
+
+        .question:hover{
+            cursor: pointer;
+        }
+        .item.msg{text-align:left; margin : 0 0 5px 10px; border-radius: 10px 0 0 0;}
+        .slider{
+            width: 100%;
+        }
+
+    </style>
+
+</head>
+<body style="height: 100%;background-color: #d7dee6">
+
+<div style="padding: 0px; height:100%;background-color: #e8e8e8;"></div>
+
+<div class="chatheader" >
+    <table style="width:100%";>
+        <tr>
+            <td style="cursor: pointer;" onClick="location.href='/'">울산대학교 챗봇</td>
+        </tr>
+    </table>
+</div>
+<div style="height:450px; margin-top:50px; background-color: #d7dee6;" id="chatbox">
+    <div class="item msg" >
+        <div class="box">
+            <div class="item msg">학생복지 관련 질문 페이지 입니다.
+                </br>
+            </div>
+            <div class="slider" id="slider" >
+                <div class="QnAgrid">
+                    <div class="question" onClick="location.href='/hubok'" id="Q1">휴복학</div>
+                    <div class="question" onClick="location.href='/deglok'" id="Q2">등록</div>
+                    <div class="question" onClick="location.href='/sugang'" id="Q2">교과과정</div>
+                    <div class="question" onClick="location.href='/welfare'" id="Q4">학생복지</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="chatfooter">
+        <table style="width:100%">
+        <tr>
+            <td style="width:85%; text-align:left;" >
+                <input type="text" id="chattext" style="padding:10px; width:100%; border:solid 0px #000;" placeholder="내용 입력" onkeyup="submit()">
+            </td>
+            <td style="width:15%; align:right";>
+                <button style="padding:10px; width:100%;" onclick="sendAsk()">전송</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    var questions = document.getElementsByClassName('question')
+    questions[0].addEventListener('mouseover', (event)=>{
+        questions[0].style.backgroundColor="#ECCEF5"
+    });
+    questions[1].addEventListener('mouseover', (event)=>{
+        questions[1].style.backgroundColor="#ECCEF5"
+    });
+    questions[2].addEventListener('mouseover', (event)=>{
+        questions[2].style.backgroundColor="#ECCEF5"
+    });
+    questions[3].addEventListener('mouseover', (event)=>{
+        questions[3].style.backgroundColor="#ECCEF5"
+    });
+    questions[0].addEventListener('mouseout', (event)=>{
+        questions[0].style.backgroundColor="#FCFCFC"
+    });
+    questions[1].addEventListener('mouseout', (event)=>{
+        questions[1].style.backgroundColor="#FCFCFC"
+    });
+    questions[2].addEventListener('mouseout', (event)=>{
+        questions[2].style.backgroundColor="#FCFCFC"
+    });
+    questions[3].addEventListener('mouseout', (event)=>{
+        questions[3].style.backgroundColor="#FCFCFC"
+    });
+
+</script>
+
+</body>
+</html>
