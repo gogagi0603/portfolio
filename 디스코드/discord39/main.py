@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.service import Service
 from discord.utils import get
 from discord import FFmpegPCMAudio
 import requests
-token = "OTQ3ODcxMjgwODY5MjkwMDY0.Yhzj6w.EFfFEilPH6qw0zkAxMhmgakMcG8"
+token = "OTQ3ODcxMjgwODY5MjkwMDY0.Yhzj6w.3VxnnBvNCaRMDQMz0pw5w8Si8pI"
 bot = commands.Bot(command_prefix='!')
 
 user = []
