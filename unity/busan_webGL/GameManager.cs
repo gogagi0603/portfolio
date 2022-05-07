@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     VideoSurface myView;
     VideoSurface remoteView;
     IRtcEngine mRtcEngine;
-    private string TOKEN = "0068184f9d53fb74476bd3aa0e94744b802IACs80AMrFWjEf4rl1dQIgKIG+kBWZNZxi1ZGnJaFuQ0zAx+f9gAAAAAEABrDG+dRHVNYgEAAQBDdU1i";
+    private string TOKEN = "SECRET_KEY";
     private const float Offset = 100;
     private int userCount = 0;
     void Awake()
@@ -214,7 +214,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("click");
     }
 
-    void onClickAdd() // byÅÂ°ü  Âü¿©ÀÚ°¡ Ãß°¡µÆÀ»¶§ È­¸é ¿À¸¥ÂÊ ¸®½ºÆ®¿¡ Ãß°¡ ½ÃÅ°´Â ÇÔ¼ö
+    void onClickAdd() // byíƒœê´€  ì°¸ì—¬ìê°€ ì¶”ê°€ëì„ë•Œ í™”ë©´ ì˜¤ë¥¸ìª½ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€ ì‹œí‚¤ëŠ” í•¨ìˆ˜
     {
         
         GameObject temp = Instantiate(test, new Vector3(0, 0, 0), Quaternion.identity);
@@ -232,15 +232,15 @@ public class GameManager : MonoBehaviour
         remote.SetActive(boolean);
     }
 
-    void changeObject() // by ÅÂ°ü / ¿À¸¥ÂÊ È­¸é ¸®½ºÆ®¸¦ Å¬¸¯½Ã ½ÇÇàµÇ´Â Å« È­¸é°ú ±³Ã¼ÇÏ´Â ÀÌº¥Æ® ¸®½º³Ê ÇÔ¼ö
+    void changeObject() // by íƒœê´€ / ì˜¤ë¥¸ìª½ í™”ë©´ ë¦¬ìŠ¤íŠ¸ë¥¼ í´ë¦­ì‹œ ì‹¤í–‰ë˜ëŠ” í° í™”ë©´ê³¼ êµì²´í•˜ëŠ” ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ í•¨ìˆ˜
     {
         
         GameObject clickObject = EventSystem.current.currentSelectedGameObject;
-        if (clickObject.name != "RemoteView"){ // Å«È­¸é Å¬¸¯½Ã ¹İÀÀ x
+        if (clickObject.name != "RemoteView"){ // í°í™”ë©´ í´ë¦­ì‹œ ë°˜ì‘ x
             GameObject panel = GameObject.Find("Panel");
             RectTransform clickObject_T = clickObject.GetComponent<RectTransform>();
 
-            // Å¬¸¯ÇÑ È­¸éÀ» È­¸é¹ÛÀ¸·Î »©µ¹¸²
+            // í´ë¦­í•œ í™”ë©´ì„ í™”ë©´ë°–ìœ¼ë¡œ ë¹¼ëŒë¦¼
             clickObject.transform.SetParent(panel.transform); 
             GameObject changeRemoteObject = GameObject.Find("RemoteView");
             RectTransform remoteView_T = changeRemoteObject.GetComponent<RectTransform>();
