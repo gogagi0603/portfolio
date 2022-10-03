@@ -9,4 +9,4 @@ GameManager.cs : 영상통화 기능
 Player.cs : 플레이어 걷기 뛰기 점프 기능. 애니메이션 컨트롤러와 연동
 
 
- https://www.busanmayor.org *2022년 9월 기준 
+ https://www.busanmayor.org *2022년 9월 기준 호스팅 종료
